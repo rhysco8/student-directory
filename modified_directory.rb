@@ -52,7 +52,12 @@ def print(students, width)
   end
 end
 def print_footer(students, width)
-  puts "Overall, we have #{students.count} great students".center(width)
+  # using #{students.count == 1 ? "" : "s"}  after "student" made line too long
+  if students.count == 1
+    puts "Overall, we have 1 great student".center(width)
+  else
+    puts "Overall, we have #{students.count} great students".center(width)
+  end
 end
 #nothing happens until we call the methods
 students = input_students
