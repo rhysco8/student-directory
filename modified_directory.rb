@@ -10,10 +10,6 @@ def input_students
   while !name.empty? do
     # add the student hash to the array
     students << {name: name, cohort: :november}
-    # ask for student's country of birth
-    student_num = students.count - 1
-    puts "What is #{students[student_num][:name]}'s country of birth?"
-    students[student_num][:country_of_birth] = gets.chomp
     puts "Now we have #{students.count} students"
     # get another name from the user
     name = gets.chomp
@@ -22,20 +18,21 @@ def input_students
   # return the array of students
   students
 end
-def print_header
-  puts "The students of Villains Academy"
-  puts "-------------"
+def print_header(width)
+  puts "The students of Villains Academy".center(width)
+  puts "-------------".center(width)
 end
-def print(students)
+def print(students, width)
   students.each.with_index do |student, idx|
-    puts "#{idx + 1}. #{student[:name]} (#{student[:country_of_birth]}, #{student[:cohort].capitalize} cohort)"
+    puts "#{idx + 1}. #{student[:name]} (#{student[:cohort].capitalize} cohort)".center(width)
   end
 end
-def print_footer(students)
-  puts "Overall, we have #{students.count} great students"
+def print_footer(students, width)
+  puts "Overall, we have #{students.count} great students".center(width)
 end
 #nothing happens until we call the methods
 students = input_students
-print_header
-print(students)
-print_footer(students)
+line_width = 50
+print_header(line_width)
+print(students, line_width)
+print_footer(students, line_width)
