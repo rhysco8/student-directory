@@ -25,6 +25,7 @@ def input_students
       cohort = default_cohort if cohort.empty?
     end
     students[student_num][:cohort] = cohort.to_sym
+    # prints 'student' if it's the first student being entered
     if students.count == 1
       puts "Now we have 1 student"
     else
