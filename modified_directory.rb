@@ -82,7 +82,11 @@ def print_footer(students, width)
 end
 #nothing happens until we call the methods
 students = input_students
-line_width = 50
-print_header(line_width)
-print(students, line_width)
-print_footer(students, line_width)
+if students.empty?
+  puts "There are no students at the Academy"
+else
+  line_width = 50
+  print_header(line_width)
+  print(students, line_width)
+  print_footer(students, line_width)
+end
