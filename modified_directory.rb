@@ -5,7 +5,7 @@ def input_students
   # create an empty array
   students = []
   # get the first name
-  name = gets.chomp
+  name = gets.gsub!("\n", "")
   # while the name is not empty, repeat this code
   while !name.empty? do
     # add the student hash to the array
@@ -15,13 +15,13 @@ def input_students
     puts "What is #{students[student_num][:name]}'s cohort?"
     puts "Hit return if unknown"
     default_cohort = :unknown
-    cohort = gets.chomp.downcase
+    cohort = gets.gsub!("\n", "").downcase
     # assess if entered cohort is blank and if so assign it as the default
     cohort = default_cohort if cohort.empty?
     # keep asking for valid input if there's a typo
     until valid_cohort(cohort.to_sym, default_cohort) do
       puts "Please enter a valid cohort or hit return if unknown"
-      cohort = gets.chomp.downcase
+      cohort = gets.gsub!("\n", "").downcase
       cohort = default_cohort if cohort.empty?
     end
     students[student_num][:cohort] = cohort.to_sym
@@ -32,7 +32,7 @@ def input_students
       puts "Now we have #{students.count} students"
     end
     # get another name from the user
-    name = gets.chomp
+    name = gets.gsub!("\n", "")
   end
   # return the array of students
   students
