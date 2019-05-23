@@ -24,7 +24,7 @@ end
 def print(students)
   count = 1
   students.each do |student|
-    if student[:name][0] == "A"
+    if student[:name].delete(' ').length < 12
       puts "#{count}. #{student[:name]} (#{student[:cohort]} cohort)"
       count += 1
     end
