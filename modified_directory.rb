@@ -9,12 +9,18 @@ def input_students
   # while the name is not empty, repeat this code
   while !name.empty? do
     # add the student hash to the array
-    students << {name: name, cohort: :november}
+    students << {name: name}
+    # ask for student's cohort
+    student_num = students.count - 1
+    puts "What is #{students[student_num][:name]}'s cohort?"
+    default_cohort = :unknown
+    cohort = gets.chomp.downcase
+    # assess if entered cohort is blank and if so assign it as the default
+    students[student_num][:cohort] = cohort.empty? ? default_cohort : cohort.to_sym
     puts "Now we have #{students.count} students"
     # get another name from the user
     name = gets.chomp
   end
-  # now
   # return the array of students
   students
 end
