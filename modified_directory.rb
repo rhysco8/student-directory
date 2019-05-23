@@ -22,14 +22,11 @@ def print_header
   puts "-------------"
 end
 def print(students)
-  count = 1
-  students.each do |student|
-    if student[:name].delete(' ').length < 12
-      puts "#{count}. #{student[:name]} (#{student[:cohort]} cohort)"
-      count += 1
-    end
+  count = 0
+  while count < students.length do
+    puts "#{count + 1}. #{students[count][:name]} (#{students[count][:cohort]} cohort)"
+    count += 1
   end
-  count
 end
 def print_footer(students)
   puts "Overall, we have #{students.count} great students"
