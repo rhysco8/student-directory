@@ -25,7 +25,11 @@ def input_students
       cohort = default_cohort if cohort.empty?
     end
     students[student_num][:cohort] = cohort.to_sym
-    puts "Now we have #{students.count} students"
+    if students.count == 1
+      puts "Now we have 1 student"
+    else
+      puts "Now we have #{students.count} students"
+    end
     # get another name from the user
     name = gets.chomp
   end
@@ -42,13 +46,29 @@ def valid_cohort(cohort, default)
   ]
   cohorts.include?(cohort.to_sym)
 end
+def used_cohorts(students)
+  used_cohorts = []
+  students.each do |student|
+    if !used_cohorts.include?(student[:cohort])
+      used_cohorts << student[:cohort]
+    end
+  end
+  used_cohorts
+end
 def print_header(width)
   puts "The students of Villains Academy".center(width)
   puts "-------------".center(width)
 end
 def print(students, width)
-  students.each.with_index do |student, idx|
-    puts "#{idx + 1}. #{student[:name]} (#{student[:cohort].capitalize} cohort)".center(width)
+  used_cohorts(students).each do |cohort|
+    puts "#{cohort.capitalize} cohort:".center(width)
+    count = 1
+    students.each do |student|
+      if student[:cohort] == cohort
+        puts "#{count}. #{student[:name]}".center(width)
+        count += 1
+      end
+    end
   end
 end
 def print_footer(students, width)
