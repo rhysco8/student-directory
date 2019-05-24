@@ -10,7 +10,7 @@ There are 2 versions of the directory currently.
 ruby directory.rb
 ```
 This version has an interactive menu which gives you the option to add student names (with the November cohort hardcoded), print the current list of students, save the list to a hardcoded a CSV file and load from that same file.
-It can also be passed a file with a list of students to load from the command line.
+It loads students.csv by default but can also be passed a file with a list of students to load from the command line.
 
 2. The modified version has had several fancy changes made to it, as per the exercises listed in the Makers Academy curriculum. It can be run by using
 ```shell

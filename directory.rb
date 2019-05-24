@@ -1,14 +1,41 @@
 @students = [] # an empty array accessible to all methods
 
+def menu_options
+  menu_options = {
+    "1" => method(:input_students),
+    "2" => method(:show_students),
+    "3" => method(:save_students),
+    "4" => method(:load_students),
+    "9" => method(:exit_program)
+  }
+end
+
 def input_students
+  current_count = @students.count
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
   name = STDIN.gets.chomp
   while !name.empty? do
     add_to_list(name, :november)
-    puts "Now we have #{@students.count} students"
+    puts "Now we have #{student_or_students(@students.count)}"
     name = STDIN.gets.chomp
   end
+  puts "Finished adding #{student_or_students(@students.count - current_count)}"
+end
+
+def student_or_students(number)
+  if number == 1
+    "1 student"
+  else
+    "#{number} students"
+  end
+end
+
+
+def show_students
+  print_header
+  print_students_list
+  print_footer
 end
 
 def print_header
@@ -23,39 +50,7 @@ def print_students_list
 end
 
 def print_footer
-  puts "Overall, we have #{@students.count} great students"
-end
-
-def print_menu
-  puts "1. Input the students"
-  puts "2. Show the students"
-  puts "3. Save the list to students.csv"
-  puts "4. Load the list from students.csv"
-  puts "9. Exit"
-end
-
-def show_students
-  print_header
-  print_students_list
-  print_footer
-end
-
-def menu_options
-  menu_options = {
-    "1" => method(:input_students),
-    "2" => method(:show_students),
-    "3" => method(:save_students),
-    "4" => method(:load_students),
-    "9" => method(:exit)
-  }
-end
-
-def user_choice(selection)
-  if menu_options.has_key?(selection)
-    menu_options[selection].()
-  else
-    puts "I don't know what you meant, try again"
-  end
+  puts "Overall, we have #{student_or_students(@students.count)}"
 end
 
 def save_students
@@ -68,6 +63,7 @@ def save_students
     file.puts csv_line
   end
   file.close
+  puts "Student list saved to students.csv"
 end
 
 def load_students(filename = "students.csv")
@@ -81,11 +77,32 @@ def load_students(filename = "students.csv")
 end
 
 def load_message(filename)
-  puts "Loaded #{@students.count} from #{filename}"
+  puts "Loaded #{@students.count} students from #{filename}"
 end
 
 def add_to_list(name, cohort)
   @students << {name: name, cohort: cohort.to_sym}
+end
+
+def exit_program
+  puts "Goodbye!"
+  exit
+end
+
+def print_menu
+  puts "1. Input the students"
+  puts "2. Show the students"
+  puts "3. Save the list to students.csv"
+  puts "4. Load the list from students.csv"
+  puts "9. Exit"
+end
+
+def user_choice(selection)
+  if menu_options.has_key?(selection)
+    menu_options[selection].()
+  else
+    puts "I don't know what you meant, try again"
+  end
 end
 
 def interactive_menu
