@@ -3,14 +3,10 @@
 def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
-  # get the first name
   name = STDIN.gets.chomp
-  # while the name is not empty, repeat this code
   while !name.empty? do
-    # add the student hash to the array
     add_to_list(name, :november)
     puts "Now we have #{@students.count} students"
-    # get another name from the user
     name = STDIN.gets.chomp
   end
 end
@@ -30,13 +26,6 @@ def print_footer
   puts "Overall, we have #{@students.count} great students"
 end
 
-def interactive_menu
-  loop do
-    print_menu
-    process(STDIN.gets.chomp)
-  end
-end
-
 def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
@@ -51,20 +40,21 @@ def show_students
   print_footer
 end
 
-def process(selection)
-  case selection
-    when "1"
-      input_students
-    when "2"
-      show_students
-    when "3"
-      save_students
-    when "4"
-      load_students
-    when "9"
-      exit
-    else
-      puts "I don't know what you meant, try again"
+def menu_options
+  menu_options = {
+    "1" => method(:input_students),
+    "2" => method(:show_students),
+    "3" => method(:save_students),
+    "4" => method(:load_students),
+    "9" => method(:exit)
+  }
+end
+
+def user_choice(selection)
+  if menu_options.has_key?(selection)
+    menu_options[selection].()
+  else
+    puts "I don't know what you meant, try again"
   end
 end
 
@@ -90,6 +80,21 @@ def load_students(filename = "students.csv")
   load_message(filename)
 end
 
+def load_message(filename)
+  puts "Loaded #{@students.count} from #{filename}"
+end
+
+def add_to_list(name, cohort)
+  @students << {name: name, cohort: cohort.to_sym}
+end
+
+def interactive_menu
+  loop do
+    print_menu
+    user_choice(STDIN.gets.chomp)
+  end
+end
+
 def try_load_students
   filename = ARGV.first # first argument from the command line
   if filename.nil?
@@ -100,14 +105,6 @@ def try_load_students
     puts "Sorry, #{filename} doesn't exist."
     exit # quit the program
   end
-end
-
-def load_message(filename)
-  puts "Loaded #{@students.count} from #{filename}"
-end
-
-def add_to_list(name, cohort)
-  @students << {name: name, cohort: cohort.to_sym}
 end
 
 try_load_students
