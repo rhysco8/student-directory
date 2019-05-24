@@ -1,4 +1,5 @@
 @students = [] # an empty array accessible to all methods
+require 'CSV'
 
 def menu_options
   menu_options = {
@@ -67,23 +68,20 @@ end
 def save_students
   filename = ask_filename("save")
   # open the file for writing
-  File.open filename, "w" do |f|
+  CSV.open(filename, "wb") do |csv|
     # iterate over the array of students
     @students.each do |student|
       student_data = [student[:name], student[:cohort]]
-      csv_line = student_data.join(",")
-      f.puts csv_line
+      csv << student_data
     end
   end
   puts "Student list saved to #{filename}"
 end
 
 def load_students(filename = ask_filename("load"))
-  File.open filename, "r" do |f|
-    f.readlines.each do |line|
-      name, cohort = line.chomp.split(',')
-      add_to_list(name, cohort)
-    end
+  CSV.foreach(filename) do |line|
+    name, cohort = line
+    add_to_list(name, cohort)
   end
   load_message(filename)
 end
