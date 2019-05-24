@@ -18,3 +18,7 @@ ruby modified_directory.rb
 ```
   * The current version asks for student names on startup and for each student you can specify their cohort. The cohorts are January to December and if left blank the cohort defaults to 'unknown'. Once all names and cohorts have been entered, the program prints a centered list of the students by cohort. If no student names have been entered then the list is not printed, just a message to say there are no students.
   * Previous iterations can be found in the commit history.
+
+## source_code.rb ##
+
+This program reads its own source code and prints it to the screen.
