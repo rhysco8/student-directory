@@ -53,9 +53,21 @@ def print_footer
   puts "Overall, we have #{student_or_students(@students.count)}"
 end
 
+def ask_filename(action)
+  if action == "save"
+    puts "Type the name of the file to save to"
+  elsif action == "load"
+    puts "Type the name of the file to load from"
+  end
+  puts "Hit return to use students.csv"
+  filename = STDIN.gets.chomp
+  filename.empty? ? "students.csv" : filename
+end
+
 def save_students
+  filename = ask_filename("save")
   # open the file for writing
-  file = File.open("students.csv", "w")
+  file = File.open(filename, "w")
   # iterate over the array of students
   @students.each do |student|
     student_data = [student[:name], student[:cohort]]
@@ -63,10 +75,10 @@ def save_students
     file.puts csv_line
   end
   file.close
-  puts "Student list saved to students.csv"
+  puts "Student list saved to #{filename}"
 end
 
-def load_students(filename = "students.csv")
+def load_students(filename = ask_filename("load"))
   file = File.open(filename, "r")
   file.readlines.each do |line|
     name, cohort = line.chomp.split(',')
@@ -115,7 +127,7 @@ end
 def try_load_students
   filename = ARGV.first # first argument from the command line
   if filename.nil?
-    load_students
+    load_students("students.csv")
   elsif File.exists?(filename) # if it exists
     load_students(filename)
   else # if it doesn't exist
